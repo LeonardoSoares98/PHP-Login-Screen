@@ -75,8 +75,10 @@ function validateSignUp() {
 
   <div class="login-wrap">
   <div class="login-html">
-    <input id="tab-1" type="radio" name="tab" class="sign-in" checked><label for="tab-1" class="tab">Sign In</label>
-    <input id="tab-2" type="radio" name="tab" class="sign-up"><label for="tab-2" class="tab">Sign Up</label>
+    
+    <input id="tab-1" type="radio" name="tab" class="sign-in" checked><label for="tab-1" class="tab">Entrar</label>
+    <input id="tab-2" type="radio" name="tab" class="sign-up"><label for="tab-2" class="tab">Cadastrar</label>
+    
     <div class="login-form">
       <form class="sign-in-htm" action="./api/user/login.php" onsubmit="return validateLogin()" method="GET">
         <div class="group">
@@ -84,45 +86,54 @@ function validateSignUp() {
           <input id="username_login" name="username" type="text" class="input" required maxlength="25">
           <span id="username_login_error" class="error"></span>
         </div>
+        
         <div class="group">
           <label for="pass" class="label">Senha</label>
           <input id="password_login" name="password" type="password" class="input" data-type="password" required maxlength="15">
           <span id="password_login_error" class="error"></span>
         </div>
+        
         <div class="group">
           <input id="check" type="checkbox" class="check" checked>
-          <label for="check"><span class="icon"></span> Keep me Signed in</label>
+          <label for="check"><span class="icon"></span> Salvar credenciais</label>
         </div>
+        
         <div class="group">
-          <input type="submit" class="button" value="Sign In">
+          <input type="submit" class="button" value="Entrar">
         </div>
+        
         <div class="hr"></div>
         <div class="foot-lnk">
           <a href="#forgot">Esqueceu a senha?</a>
         </div>
       </form>
+      
       <form class="sign-up-htm" action="./api/user/signup.php" onsubmit="return validateSignUp()" method="POST">
         <div class="group">
           <label for="user" class="label">Usuário</label>
           <input id="username_signup" name="username" type="text" class="input" required maxlength="25">
           <span id="username_signup_error" class="error"></span>
         </div>
+        
         <div class="group">
           <label for="pass" class="label">Senha</label>
           <input id="password_signup" name="password" type="password" class="input" data-type="password" required maxlength="15">
           <span id="password_signup_error" class="error"></span>
         </div>
+        
         <div class="group">
           <label for="pass" class="label">Confirmar Senha</label>
           <input id="confirm_password_signup" name="confirm_password" type="password" class="input" data-type="password" required maxlength="15">
           <span id="confirm_password_signup_error" class="error"></span>
         </div>
+        
         <div class="group">
-          <input type="submit" class="button" value="Sign Up">
+          <input type="submit" class="button" value="Cadastrar">
         </div>
+        
         <div class="hr"></div>
         <div class="foot-lnk">
-          <label for="tab-1">Already Member?</label>
+          <label for="tab-1">Já possui conta?</label>
         </div>
       </form>
     </div>

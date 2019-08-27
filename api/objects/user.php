@@ -3,6 +3,7 @@ class User{
  
     // database connection and table name
     private $conn;
+    private $db_name = "teste";
     private $table_name = "users";
  
     // object properties
@@ -17,32 +18,27 @@ class User{
     }
     // signup user
     function signup(){
-    
+    	//Remove html chars
+    	$this->sanitizeLogin();
+    	
         if($this->isAlreadyExist()){
             return false;
         }
-        if($this->$password !== $this->confirm_password){
+        if($this->password !== $this->confirm_password){
         	return false;
         }
-        if(strlen($this->$password) < 6){
+        if(strlen($this->password) < 6){
         	return false;
         }
+        
         // query to insert record
         $query = "INSERT INTO
-                    teste." . $this->table_name . "
+                    ".$this->db_name."." . $this->table_name . "
                 SET
-                    username=:username, password=:password";
+                    username=".$this->username.", password=".$this->password."";
     
         // prepare query
         $stmt = $this->conn->prepare($query);
-    
-        // sanitize
-        $this->username=htmlspecialchars(strip_tags($this->username));
-        $this->password=htmlspecialchars(strip_tags($this->password));
-    
-        // bind values
-        $stmt->bindParam(":username", $this->username);
-        $stmt->bindParam(":password", $this->password);
     
         // execute query
         if($stmt->execute()){
@@ -55,11 +51,14 @@ class User{
     }
     // login user
     function login(){
+    	//Remove html chars
+    	$this->sanitizeLogin();
+    	
         // select all query
         $query = "SELECT
                     `id`, `username`, `password`
                 FROM
-                    teste." . $this->table_name . " 
+                    ".$this->db_name."." . $this->table_name . " 
                 WHERE
                     username='".$this->username."' AND password='".$this->password."'";
         // prepare query statement
@@ -71,7 +70,7 @@ class User{
     function isAlreadyExist(){
         $query = "SELECT *
             FROM
-                teste." . $this->table_name . " 
+                ".$this->db_name."." . $this->table_name . " 
             WHERE
                 username='".$this->username."'";
         // prepare query statement
@@ -84,5 +83,11 @@ class User{
         else{
             return false;
         }
+    }
+    function sanitizeLogin(){
+    	// sanitize login strings
+    	$this->username = htmlspecialchars(strip_tags($this->username));
+    	$this->password = htmlspecialchars(strip_tags($this->password));
+    	$this->confirm_password = htmlspecialchars(strip_tags($this->confirm_password));
     }
 }
