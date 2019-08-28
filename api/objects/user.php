@@ -24,28 +24,24 @@ class User {
 		if ($this->isAlreadyExist ()) {
 			return false;
 		}
-		if ($this->password !== $this->confirm_password) {
-			return false;
-		}
-		if (strlen ( $this->password ) < 6) {
-			return false;
-		}
 		
 		// query to insert record
 		$query = "INSERT INTO
                     " . $this->db_name . "." . $this->table_name . "
                 SET
-                    username=" . $this->username . ", password=" . $this->password . "";
+                    username='" . $this->username . "', password='" . $this->password . "'";
 		
 		// prepare query
 		$stmt = $this->conn->prepare ( $query );
 		
 		// execute query
+		var_dump($stmt);
 		if ($stmt->execute ()) {
 			$this->id = $this->conn->lastInsertId ();
+			var_dump("true");
 			return true;
 		}
-		
+		var_dump("false");
 		return false;
 	}
 	// login user
@@ -76,6 +72,8 @@ class User {
 		$stmt = $this->conn->prepare ( $query );
 		// execute query
 		$stmt->execute ();
+		var_dump($stmt);
+		var_dump($stmt->rowCount ());
 		if ($stmt->rowCount () > 0) {
 			return true;
 		} else {
