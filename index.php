@@ -61,7 +61,7 @@
 	}
 </script>
 
-<meta charset="UTF-8">
+
 <title>PHP Learning</title>
 
 
@@ -106,7 +106,7 @@ if (isset($_POST['confirm_password'])){
 				"message" => "Username already exists!"
 		);
 	}
-	print_r ( json_encode ( $user_arr ) );
+	var_dump(json_encode($user_arr));
 }
 ?>
 
@@ -122,7 +122,7 @@ if (isset($_POST['confirm_password'])){
 				<form class="sign-in-htm" action="./api/user/login.php"
 					onsubmit="return validateLogin()" method="GET">
 					<div class="group">
-						<label for="user" class="label">Usuário</label> <input
+						<label for="user" class="label"><?php echo utf8_encode("Usuário") ?></label> <input
 							id="username_login" name="username" type="text" class="input"
 							required maxlength="25"> <span id="username_login_error"
 							class="error"></span>
@@ -153,7 +153,7 @@ if (isset($_POST['confirm_password'])){
 				<form class="sign-up-htm" action="index.php"
 					onsubmit="return validateSignUp()" method="POST">
 					<div class="group">
-						<label for="user" class="label">Usuário</label> <input
+						<label for="user" class="label"><?php echo utf8_encode("Usuário") ?></label> <input
 							id="username_signup" name="username" type="text" class="input"
 							required maxlength="25"> <span id="username_signup_error"
 							class="error"></span>
@@ -180,7 +180,7 @@ if (isset($_POST['confirm_password'])){
 
 					<div class="hr"></div>
 					<div class="foot-lnk">
-						<label for="tab-1">Já possui conta?</label>
+						<label for="tab-1"><?php echo utf8_encode("Já possui conta?") ?></label>
 					</div>
 				</form>
 			</div>
