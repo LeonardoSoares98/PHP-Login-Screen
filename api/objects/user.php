@@ -35,13 +35,10 @@ class User {
 		$stmt = $this->conn->prepare ( $query );
 		
 		// execute query
-		var_dump($stmt);
 		if ($stmt->execute ()) {
 			$this->id = $this->conn->lastInsertId ();
-			var_dump("true");
 			return true;
 		}
-		var_dump("false");
 		return false;
 	}
 	// login user

@@ -87,26 +87,50 @@ $db = $database->getConnection ();
 
 $user = new User ( $db );
 
-if (isset($_POST['confirm_password'])){
+if (isset($_POST['password'])){
 	// set user property values
 	$user->username = $_POST ['username'];
 	$user->password = base64_encode ( $_POST ['password'] );
 	$user->confirm_password = base64_encode ( $_POST ['confirm_password'] );
-	
+	// create the user
 	if ($user->signup ()) {
 		$user_arr = array (
 				"status" => true,
-				"message" => "Successfully Signup!",
+				"message" => "Cadastrado com sucesso!",
 				"id" => $user->id,
 				"username" => $user->username
 		);
 	} else {
 		$user_arr = array (
 				"status" => false,
-				"message" => "Username already exists!"
+				"message" => "Usuário já existe!"
 		);
 	}
-	var_dump(json_encode($user_arr));
+	var_dump($user_arr);
+
+}elseif(isset($_GET['password'])){
+	// set ID property of user to be edited
+	$user->username = isset ( $_GET ['username'] ) ? $_GET ['username'] : die ();
+	$user->password = base64_encode ( isset ( $_GET ['password'] ) ? $_GET ['password'] : die () );
+	// read the details of user to be edited
+	$stmt = $user->login ();
+	if ($stmt->rowCount () > 0) {
+		// get retrieved row
+		$row = $stmt->fetch ( PDO::FETCH_ASSOC );
+		// create array
+		$user_arr = array (
+				"status" => true,
+				"message" => "Logado com sucesso!",
+				"id" => $row ['id'],
+				"username" => $row ['username']
+		);
+	} else {
+		$user_arr = array (
+				"status" => false,
+				"message" => "Usuário ou senha inválidos!"
+		);
+	}
+	var_dump($user_arr);
 }
 ?>
 
@@ -119,7 +143,7 @@ if (isset($_POST['confirm_password'])){
 			<label for="tab-2" class="tab">Cadastrar</label>
 
 			<div class="login-form">
-				<form class="sign-in-htm" action="./api/user/login.php"
+				<form class="sign-in-htm" action="index.php"
 					onsubmit="return validateLogin()" method="GET">
 					<div class="group">
 						<label for="user" class="label"><?php echo utf8_encode("Usuário") ?></label> <input
