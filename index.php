@@ -87,7 +87,7 @@ $db = $database->getConnection ();
 
 $user = new User ( $db );
 
-if (isset($_POST['password'])){
+if (isset($_POST['button']) && $_POST['button']==='Cadastrar'){
 	// set user property values
 	$user->username = $_POST ['username'];
 	$user->password = base64_encode ( $_POST ['password'] );
@@ -108,10 +108,10 @@ if (isset($_POST['password'])){
 	}
 	var_dump($user_arr);
 
-}elseif(isset($_GET['password'])){
+}elseif(isset($_POST['button']) && $_POST['button']==='Entrar'){
 	// set ID property of user to be edited
-	$user->username = isset ( $_GET ['username'] ) ? $_GET ['username'] : die ();
-	$user->password = base64_encode ( isset ( $_GET ['password'] ) ? $_GET ['password'] : die () );
+	$user->username = isset ( $_POST['username'] ) ? $_POST['username'] : die ();
+	$user->password = base64_encode ( isset ( $_POST['password'] ) ? $_POST['password'] : die () );
 	// read the details of user to be edited
 	$stmt = $user->login ();
 	if ($stmt->rowCount () > 0) {
@@ -144,7 +144,7 @@ if (isset($_POST['password'])){
 
 			<div class="login-form">
 				<form class="sign-in-htm" action="index.php"
-					onsubmit="return validateLogin()" method="GET">
+					onsubmit="return validateLogin()" method="POST">
 					<div class="group">
 						<label for="user" class="label"><?php echo utf8_encode("Usuário") ?></label> <input
 							id="username_login" name="username" type="text" class="input"
@@ -165,7 +165,7 @@ if (isset($_POST['password'])){
 					</div>
 
 					<div class="group">
-						<input type="submit" class="button" value="Entrar">
+						<input type="submit" name="button" class="button" value="Entrar">
 					</div>
 
 					<div class="hr"></div>
@@ -199,7 +199,7 @@ if (isset($_POST['password'])){
 					</div>
 
 					<div class="group">
-						<input type="submit" class="button" value="Cadastrar">
+						<input type="submit" name="button" class="button" value="Cadastrar">
 					</div>
 
 					<div class="hr"></div>

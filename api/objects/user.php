@@ -69,8 +69,7 @@ class User {
 		$stmt = $this->conn->prepare ( $query );
 		// execute query
 		$stmt->execute ();
-		var_dump($stmt);
-		var_dump($stmt->rowCount ());
+
 		if ($stmt->rowCount () > 0) {
 			return true;
 		} else {
